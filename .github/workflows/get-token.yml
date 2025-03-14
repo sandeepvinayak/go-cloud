@@ -9,19 +9,18 @@ jobs:
   get-token:
     runs-on: ubuntu-latest
     steps:
-      - name: Get OIDC Token
-        id: oidc
-        run: |
-          # Fetch the OIDC token (valid for 1 hour)
-          TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}" \
-            -H "User-Agent: actions/oidc-client" \
-            -H "Authorization: Bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
-            | jq -r '.value')
-
-          # Print the token (masked in logs but accessible for debugging)
-          echo "OIDC_TOKEN<<EOF" >> $GITHUB_ENV
-          echo "$TOKEN" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Get Token
+        id: auth
+        uses: google-github-actions/auth@v0.4.0
+        with:
+          token_format: "access_token"
+          create_credentials_file: true
+          activate_credentials_file: true
+          workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER_ID }}
+          service_account: ${{ secrets.SERVICE_ACCOUNT }}
+          access_token_lifetime: '100s'
   
       - name: Save Token to File
         run: |
