@@ -12,13 +12,13 @@ jobs:
       - name: Get OIDC Token
         id: oidc
         run: |
-          # Fetch the OIDC token (valid for 1 hour)
-          TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}" \
+          # Fetch the OIDC token with a custom audience
+          TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=https://iam.googleapis.com/projects/599653580068/locations/global/workloadIdentityPools/substrate-sdk/providers/github-pool" \
             -H "User-Agent: actions/oidc-client" \
             -H "Authorization: Bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
             | jq -r '.value')
 
-          # Print the token (masked in logs but accessible for debugging)
+          # Save the token to an environment variable
           echo "OIDC_TOKEN<<EOF" >> $GITHUB_ENV
           echo "$TOKEN" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
