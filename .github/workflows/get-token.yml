@@ -13,7 +13,7 @@ jobs:
         id: oidc
         run: |
           # Fetch the OIDC token with a custom audience
-          TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=https://iam.googleapis.com/projects/599653580068/locations/global/workloadIdentityPools/substrate-sdk/providers/github-pool" \
+          TOKEN=$(curl -sLS "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=//iam.googleapis.com/projects/599653580068/locations/global/workloadIdentityPools/substrate-sdk/providers/github-pool" \
             -H "User-Agent: actions/oidc-client" \
             -H "Authorization: Bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
             | jq -r '.value')
