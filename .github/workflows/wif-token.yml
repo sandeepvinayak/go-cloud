@@ -1,4 +1,5 @@
 name: wif-ci
+on: workflow_dispatch  # Manually trigger the workflow
 jobs:
   build:
     name: "Test WIF"
