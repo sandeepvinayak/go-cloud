@@ -1,5 +1,5 @@
 theme: just-the-docs
-url: "https://sandeepvinayak.github.io"
-baseurl: "/go-cloud"
+url: "https://sandeepvinayak.github.io/go-cloud"
+baseurl: "/docs"
 plugins:
   - jekyll-default-layout
